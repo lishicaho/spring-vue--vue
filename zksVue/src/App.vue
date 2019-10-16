@@ -12,7 +12,7 @@
 
     <div class="bg-color-white p10 mt5">
     <!-- 列表区域 -->
-    <el-table :data="tableData" size="small" border :height="tableHeight" :header-cell-style="TABLE_HEADER_CELL_STYLE" :cell-style="TABLE_CELL_STYLE">
+    <el-table :data="tableData" size="small" border>
       <el-table-column label="序号"  type="index" align="center" width="50"></el-table-column>
       <el-table-column label="对象编码"  prop="name" header-align="center" align="left" width="600"></el-table-column>
       <el-table-column label="对象名称" prop="password" header-align="center" align="left" min-width="100" show-overflow-tooltip></el-table-column>
@@ -46,16 +46,43 @@ export default {
   },
      methods:{
     getTableData() {
-     
-      utils.axiosMethod({
+      let success=(response)=>{
+         console.log(response.data)
+        alert(response.data);
+        this.tableData=response.data;
+      }
+  utils.axiosMethod({
+        method:"GET",
+        url:"/user/message",
+        data:this.loginData,
+        callback:success    
+      })
+
+    },
+     /**  utils.axiosMethod({
         method:"GET",
         url:"/user/message"       
-      })
-       let success=(response)=>{
-         console.log(response)
-        alert(response.data);
-      }
-    },
+      }).then(function(data){
+      that.tableData = data;
+    },function(error){
+      
+     })*/
+
+     
+
+    /** this.api({
+          url: "/user/message",
+          method: "get"
+        }).then(data => {
+          this.tableData = data;
+        })
+      
+    }, */
+
+    
+
+
+  
 
 
     doLogin(){
@@ -73,7 +100,7 @@ export default {
       })
     },
      hreftwo(){
-     this.$router.push({ path:'/two.vue'  })
+     this.$router.push({ path:'/two'  })
      }
     },
 
